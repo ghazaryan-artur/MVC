@@ -27,7 +27,6 @@ class Routes {
 			$className = "controllers\\" .ucfirst($checkingContrl);
 			if(class_exists($className)){
 				$contrl = new $className;
-				var_dump('zapuskaem metod', $methodName);
 				$this->callMethod($contrl, $methodName);
 			} else {
 				echo "ERROR: class $checkingContrl not found (404)";
