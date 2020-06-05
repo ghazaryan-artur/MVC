@@ -8,73 +8,41 @@ class Routes {
 		$this->components = explode('/', substr($_SERVER['REQUEST_URI'], 1));
 				
 		if(!empty($this->components[0])){
-			$controllerData = $this->getObject($this->components[0]);
-
-			if(!$controllerData['error']) { 
-				
-				if (!empty($this->components[1])){
-					$methodError = $this->callMethod($controllerData['contrl'], $this->components[1]);
-					if($methodError['error']){
-						echo $methodError['msg'];
-					} // else -  method called successful
-				} else {
-					// Call default method
-					$methodError = $this->callMethod($controllerData['contrl'], 'index');
-					if ($methodError['error']){
-						echo $methodError['msg'];
-					} // else -  method called successful
-				}
-
+			if(!empty($this->components[1])){
+				$this->getObject($this->components[0], $this->components[1]);
 			} else {
-				echo $controllerData['msg'];
+				$this->getObject($this->components[0], 'index');
 			}
-
 		} else {
 			// Call default controller
-			$defContrData =  $this->getObject('Entrance');
-			if (!$defContrData['error']){
-				$methodError = $this->callMethod($defContrData['contrl'], 'index');
-				if ($methodError['error']){
-					echo $methodError['msg'];
-				} // else  - method called successful
-			} else {
-				echo $defContrData['msg'];
-			}
+			$this->getObject('Entrance', 'index');
 		}
 
 	}
 	
-	private function getObject($name){
-		$output = ['error' => false, 'contrl'=> '', 'msg'=>''];
-		$dir = 'controllers'.DIRECTORY_SEPARATOR.ucfirst($name) .'.php';
+	private function getObject($checkingContrl, $methodName) :void {
+		$output = ['contrl'=> '', 'erorr_msg'=>''];
+		$dir = 'controllers'.DIRECTORY_SEPARATOR.ucfirst($checkingContrl) .'.php';
 		if (file_exists($dir)){
-			$className = "controllers\\" .ucfirst($name);
-
+			$className = "controllers\\" .ucfirst($checkingContrl);
 			if(class_exists($className)){
-				$output['contrl'] = new $className;
-				return $output;
+				$contrl = new $className;
+				var_dump('zapuskaem metod', $methodName);
+				$this->callMethod($contrl, $methodName);
 			} else {
-				$output['error'] = true;
-				$output['msg'] = "ERROR: class $name not found (404)";
-				return $output;
+				echo "ERROR: class $checkingContrl not found (404)";
 			}
 		} else {
-			$output['error'] = true;
-			$output['msg'] = "ERROR: file controllers/$name.php is not found (404)";
-			return $output;
+			echo "ERROR: file controllers/$checkingContrl.php is not found (404)";
 		}
 	}
 
-	private function callMethod($controller, $methodName){
-		$output = ['error' => false, 'msg' => ''];
+	private function callMethod($controller, $methodName) : void {
 		if(method_exists($controller, $methodName)) {	
 			$params = array_slice($this->components, 2);
 			call_user_func_array([$controller, $methodName], $params);
-			return $output;
 		} else {
-			$output['error'] = true;
-			$output['msg'] = "ERROR: Method $methodName is not found in " .get_class($controller) ." controller";
-			return $output;
+			echo "ERROR: Method $methodName is not found in " .get_class($controller);
 		}
 	}
 

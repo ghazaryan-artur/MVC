@@ -10,7 +10,6 @@ class Settings{
 
 	public function index(){
 		var_dump("You call default index method");
-
 		// some actions
 	}
 	
