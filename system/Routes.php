@@ -20,8 +20,8 @@ class Routes {
 
 	}
 	
-	private function getObject($checkingContrl, $methodName) :void {
-		$output = ['contrl'=> '', 'erorr_msg'=>''];
+	private function getObject($checkingContrl, $methodName) {
+
 		$dir = 'controllers'.DIRECTORY_SEPARATOR.ucfirst($checkingContrl) .'.php';
 		if (file_exists($dir)){
 			$className = "controllers\\" .ucfirst($checkingContrl);
@@ -36,7 +36,7 @@ class Routes {
 		}
 	}
 
-	private function callMethod($controller, $methodName) : void {
+	private function callMethod($controller, $methodName) {
 		if(method_exists($controller, $methodName)) {	
 			$params = array_slice($this->components, 2);
 			call_user_func_array([$controller, $methodName], $params);
