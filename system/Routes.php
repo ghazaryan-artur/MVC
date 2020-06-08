@@ -9,25 +9,24 @@ class Routes {
 				
 		if(!empty($this->components[0])){
 			if(!empty($this->components[1])){
-				$this->getObject($this->components[0], $this->components[1]);
+				$this->get_object($this->components[0], $this->components[1]);
 			} else {
-				$this->getObject($this->components[0], 'index');
+				$this->get_object($this->components[0], 'index');
 			}
 		} else {
 			// Call default controller
-			$this->getObject('Entrance', 'index');
+			$this->get_object('Auf', 'index');
 		}
 
 	}
 	
-	private function getObject($checkingContrl, $methodName) {
-
+	private function get_object($checkingContrl, $methodName) {
 		$dir = 'controllers'.DIRECTORY_SEPARATOR.ucfirst($checkingContrl) .'.php';
 		if (file_exists($dir)){
 			$className = "controllers\\" .ucfirst($checkingContrl);
 			if(class_exists($className)){
 				$contrl = new $className;
-				$this->callMethod($contrl, $methodName);
+				$this->call_method($contrl, $methodName);
 			} else {
 				echo "ERROR: class $checkingContrl not found (404)";
 			}
@@ -36,7 +35,7 @@ class Routes {
 		}
 	}
 
-	private function callMethod($controller, $methodName) {
+	private function call_method($controller, $methodName) {
 		if(method_exists($controller, $methodName)) {	
 			$params = array_slice($this->components, 2);
 			call_user_func_array([$controller, $methodName], $params);
