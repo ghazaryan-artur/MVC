@@ -2,17 +2,18 @@
 namespace system; 
 use config\DbConfig;
     class Model {
-        protected $db;
+        public $db;
         function __construct(){
-            $this->db = new Mysqli(DbConfig::HOST, DbConfig::USERNAME, DbConfig::PASSWORD, DbConfig::DBNAME);
+            $this->db = new \Mysqli(DbConfig::HOST, DbConfig::USERNAME, DbConfig::PASSWORD, DbConfig::DBNAME);
             if ($this->db->connect_errno) {
                 printf("Не удалось подключиться: %s\n", $this->db->connect_error());
                 exit();
             }
         }
         
-        public function select($query){          
-            if($data = $this->db->query($query)){
+        public function select($query){        
+            $data = $this->db->query($query);
+            if($data->num_rows){
                 while ($row = $data->fetch_assoc()) {
                     $result[] = $row;
                 }
@@ -53,14 +54,14 @@ use config\DbConfig;
             return $result;
         }
 
-        function __destruct() {
-            $this->db->close();
-        }
+        // function __destruct() {
+        //     $this->db->close();
+        // }
     }
-    $obj = new DB('localhost','root','','artur');
+    // $obj = new DB('localhost','root','','artur');
     // SELECT
-    $sel = $obj->select("SELECT *  FROM market");
-    var_dump($sel);
+    // $sel = $obj->select("SELECT *  FROM market");
+    // var_dump($sel);
 
     // INSERT
    /* $data = [
