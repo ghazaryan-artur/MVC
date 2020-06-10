@@ -15,7 +15,7 @@ class Routes {
 			}
 		} else {
 			// Call default controller
-			$this->get_object('Auf', 'index');
+			$this->get_object('Auth', 'index');
 		}
 
 	}
