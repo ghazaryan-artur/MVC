@@ -3,25 +3,34 @@
     <h1 class="m-auto">Registration</h1>
     <p>Please, write information about you, in this textareas. <br>It does not take much time</p>
 
-    <form action="login" method="POST">
+    <form action="/auth/reg" method="POST">
         <div class="form container">
                 <div class="col-4 mx-auto my-3">
-                    <input type="text" class="form-control" placeholder="First name"  name="first_name" pattern="[A-Za-z][a-z]{1,16}" maxlength="17" >
+                    <input type="text" class="form-control" placeholder="Name"  name="name" pattern="[A-Za-z][a-z]{1,16}" maxlength="17" >
+                    <div style="height:20px; color: red;">
+                        <span style="height:100%"><?php if(isset($this->errors['name'])) echo $this->errors['email']; ?></span>
+                    </div>
                 </div>
                 <div class="col-4 mx-auto my-3">
-                    <input  type="text" class="form-control" placeholder="Last name"  name="last_name"  pattern="[A-Za-z][a-z]{1,16}"  maxlength="17">
+                    <input  type="email" class="form-control"  placeholder="Email"  name="email"  maxlength="30">
+                    <div style="height:20px; color: red;">
+                        <span style="height:100%"> <?php if(isset($this->errors['email'])) echo $this->errors['email']; ?></span>
+                    </div>
                 </div>
                 <div class="col-4 mx-auto my-3">
-                    <input type="text" class="form-control" placeholder="Login"  name="login"  minlength="3" maxlength="17">
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <div style="height:20px; color: red;">
+                        <span style="height:100%"> <?php if(isset($this->errors['password'])) echo $this->errors['password']; ?></span>
+                    </div>
                 </div>
                 <div class="col-4 mx-auto my-3">
-                    <input  type="email" class="form-control"  placeholder="Email"  name="email" pattern="[A-Za-z0-9\_\-\.]{2,20}[@]{1}[a-z]{2,8}.[a-z]{2,3}" maxlength="30">
+                    <input type="password" name="conf_password" class="form-control" placeholder="Confirm password">
                 </div>
                 <div class="col-4 mx-auto my-3">
-                    <input  type="tel" class="form-control" placeholder="Phone number"  pattern="[0-9]{5,10}"  name="phone" id="phone">
-                </div>
-                <div class="col-4 mx-auto my-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password"  minlength="8" maxlength="17">
+                    <input name="image" type="file" class="form-control">
+                    <div style="height:20px; color: red;">
+                        <span style="height:100%"> <?php if(isset($this->errors['image'])) echo $this->errors['image']; ?></span>
+                    </div>
                 </div>
         </div>
         <div>

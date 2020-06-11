@@ -14,4 +14,8 @@ class View {
 			}
 		}
 	}
+
+	public function __get ($name){
+		$this->$name = null;
+	}
 }

@@ -3,13 +3,19 @@ namespace models;
 use system\Model;
     class User extends Model {
 
-        public function index(){
-            
-        }
         public function login($email, $password){
-            $email = $this->db->real_escape_string($email);
+            $email = $this->db->connection->real_escape_string($email);
             $password = MD5($password);
-            $sel = $this->select("SELECT *  FROM users WHERE  `email` = '$email' AND `password` = '$password'");		
+            $sel = $this->db->select("SELECT id  FROM users WHERE  `email` = '$email' AND `password` = '$password'", false);		
             return $sel;
+        }
+
+        public function reg($data){
+            var_dump($data);
+            return $this->db->insert('users', $data);
+        }
+
+        public function get_data($id){
+            return $this->db->select("SELECT * FROM users WHERE id = $id", false);     
         }
     }
