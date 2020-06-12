@@ -23,6 +23,8 @@ class Auth extends Controller{
 				if($result){
 					$_SESSION['user_id'] = $result['id'];
 					header("Location: /profile");
+				} else {
+					$this->view->matching = "Wrong email or password";
 				}
 	
 		
@@ -48,30 +50,40 @@ class Auth extends Controller{
 			} elseif($_POST["password"] != $_POST["conf_password"] ){
 				$this->view->errors['password'] = 'Passwords did\'n mutch';
 			}
-			/* if(empty($_FILES['img']['name'])) {
-				$this->view->errors['img'] =  'Any file isn\'t choosen';
+			if(empty($_FILES['image']['name'])) {
+				$this->view->errors['image'] =  'Any file isn\'t choosen';
 			} else {
-				$imgType = strtolower(strrchr($_FILES['img']['name'], '.'));   
+				$imgType = strtolower(strrchr($_FILES['image']['name'], '.'));   
 				if($imgType != ".jpg" && $imgType != ".png" && $imgType != ".jpeg" && $imgType != ".gif" ) {
-					$this->view->errors['img'] = 'Files format should be JPG, JPEG, PNG or GIF';
-				} elseif ($_FILES['img']['size'] > 200000000) {
-					$this->view->errors['img'] = 'Files size should be less than 200 MB';
+					$this->view->errors['image'] = 'Files format should be JPG, JPEG, PNG or GIF';
+				} elseif ($_FILES['image']['size'] > 200000000) {
+					$this->view->errors['image'] = 'Files size should be less than 200 MB';
 				}
-			} */
-			// Checking is email already registred
-			// $selQuery = mysqli_query($link, "SELECT email FROM users");
+			}
+
 			
 			if(empty($this->view->errors)){
-				var_dump('no error');
 				$model = new User;
-				$data = $_POST; 
-				$data['password'] = MD5($data['password']);
-				unset($data['conf_password']);
-				$data['image'] = '111'; //temporary
-				$result = $model->reg($data);
-				var_dump($result);
+				$unique = $model->is_unique($_POST['email']);
+				if ($unique){
+					$data = $_POST; 
+					$data['password'] = MD5($data['password']);
+					unset($data['conf_password']);
+					$uploadingName = microtime(). $imgType;
+					$data['image'] = $uploadingName; 
+					$result = $model->reg($data);
+					if($result){
+						if (move_uploaded_file($_FILES['image']['tmp_name'], "public/images/".$uploadingName)){
+							$_SESSION['reg'] = 'You have successfully registered';
+							header('Location: /');
+						} else {
+							$this->view->errors['image']  = "Error with uploading your foto";
+						}
+					}
+				} else {
+					$this->view->errors['email'] = "User with this email already registred";
+				}
 			}
-			var_dump('heve error');
 		}
 		$this->view->render('reg');
 	}

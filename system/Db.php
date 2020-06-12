@@ -17,7 +17,7 @@ class Db {
 
     public function select($query, $all = true){        
         $data = $this->connection->query($query);
-        if($data){
+        if($data->num_rows > 0){
             if($all){
                 while ($row = $data->fetch_assoc()) {
                     $result[] = $row;

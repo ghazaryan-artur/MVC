@@ -18,4 +18,10 @@ use system\Model;
         public function get_data($id){
             return $this->db->select("SELECT * FROM users WHERE id = $id", false);     
         }
+        
+        public function is_unique($email){
+            $email = $this->db->connection->real_escape_string($email);
+            $sel = $this->db->select("SELECT email FROM users WHERE  `email` = '$email'", false);
+            return !$sel;
+        }
     }
