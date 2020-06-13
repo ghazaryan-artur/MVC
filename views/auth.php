@@ -9,8 +9,8 @@
             <input type="text" class="form-control" name="email" id="email"  placeholder="Please enter your email">
             <small class="form-text text-muted">We'll never share your email with anyone else.</small>
             <div style="height:30px; color: red;">
-            <?= $this->emailErr ?>
-        </div>
+                <?= $this->emailErr ?>
+            </div>
         </div>
         <div class="form-group">
             <label for="password">Password</label>

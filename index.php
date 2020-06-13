@@ -7,7 +7,3 @@
 
 
 	$routs = new \system\Routes;
-
-
-
-	 

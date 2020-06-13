@@ -28,4 +28,37 @@ class Profile extends Controller{
         session_unset();
         header("Location: /");
     }
+
+    public function upg_img($prevImage){
+        $delImg = str_replace("%20", " ", $prevImage);  
+        $error  = '';
+        if(empty($_FILES['img']['name'])) {
+            $error =  'Any file isn\'t choosen';
+        } else {
+            $imgType = strtolower(strrchr($_FILES['img']['name'], '.'));   
+            if($imgType != ".jpg" && $imgType != ".png" && $imgType != ".jpeg" && $imgType != ".gif" ) {
+                $error = 'Files format should be JPG, JPEG, PNG or GIF';
+            } elseif ($_FILES['img']['size'] > 200000000) {
+                $error = 'Files size should be less than 200 MB';
+            }
+        }
+        
+        if(!$error){
+            $uploadingName = microtime() . $imgType;
+            $model = new User;
+            $isUpd = $model->upd_img($uploadingName);
+            if($isUpd){
+                if (move_uploaded_file($_FILES['img']['tmp_name'], "public/images/users/".$uploadingName)){
+                    if($prevImage != 'default.png'){
+                        unlink ("public/images/users/$delImg");
+                    }
+                } else {
+                    $error = "Error with uploading your foto";
+                }
+            }
+        }
+        $_SESSION['imgError'] = $error;
+        header('Location: /profile');
+
+    }
 }

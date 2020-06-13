@@ -4,8 +4,7 @@ use config\DbConfig;
 use mysqli;
 
 class Db {
-    public $connection; // vernutsya
-    
+    private $connection;   
     function __construct(){
         $this->connection = new \Mysqli(DbConfig::HOST, DbConfig::USERNAME, DbConfig::PASSWORD, DbConfig::DBNAME);
         if ($this->connection->connect_errno) {
@@ -22,8 +21,7 @@ class Db {
                 while ($row = $data->fetch_assoc()) {
                     $result[] = $row;
                 }
-            return $result;
-
+                return $result;
             } else {
                 return $data->fetch_assoc();
             } 
@@ -33,19 +31,18 @@ class Db {
     }
 
     public function insert($table, $data){
-        var_dump($data);
-        var_dump($table);
         $qKeys ='';
         $qValues = '';
         foreach ($data as $key => $value){
             $qKeys .= $key.',';
-            $qValues .= '"'. $this->connection->real_escape_string($value) .'"' .',';
+            $qValues .= '"'. str_replace(['\\', "'", '"'], ['\\\\', "\'", '\"'], $email) .'"' .',';
         }
         $qKeys = substr($qKeys,0,-1);
         $qValues = substr($qValues,0,-1);
         $result = $this->connection->query("INSERT INTO $table ($qKeys) VALUES ($qValues)");
         return $result;
     }
+    
 
     public function delete($from, $where = "1"){
         return $this->connection->query("DELETE FROM $from WHERE $where");
@@ -66,43 +63,7 @@ class Db {
     }
 
 
-// function __destruct() {
-//     $this->connection->close();
-// }
+    function __destruct() {
+        $this->connection->close();
+    }
 }
-
-
-// $obj = new DB('localhost','root','','artur');
-// SELECT
-// $sel = $obj->select("SELECT *  FROM market");
-// var_dump($sel);
-
-// INSERT
-/* $data = [
-'title' => 'Ford',
- 'description' => 'Lovely old american car',
- 'count' => 1000,
- 'price' => 7000
-];
-$insert = $obj->insert('market',  $data);
-var_dump($insert); */
-
-// DELETE
-// $delete = $obj->delete('market', 'id = 131');   
-// var_dump($delete);
-
-
-// UPDATE 
-// $data2 = [
-//     'title' => 'Another',
-//     'description' => 'Another car',
-//     'count' => 300,
-//     'price' => 1001
-// ];
-// $update = $obj->update('market', $data2, "id = 131");
-// var_dump($update);
-
-
-// TRUNCATE TABLE 
-// $truncate = $obj->truncate('market');
-// var_dump($truncate);
