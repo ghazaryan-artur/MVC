@@ -1,5 +1,5 @@
 <div class="container  mt-5 d-flex justify-content-end">
-    <a href="/profile/logout" class="btn btn-danger btn-lg">Logout</a>
+    <a href="/auth/logout" class="btn btn-danger btn-lg">Logout</a>
 </div>
 <div class="container border border-info mt-5 d-flex justify-content-between">
     <div>
@@ -8,15 +8,15 @@
         <p>Your email is <?= $this->email ?></p>
     </div>
     <div class="w-25 p-2">
-        <img class="w-100" src="/public/images/users/<?=$this->img?>" alt="Avatar">
-        <form action="/profile/upg_img/<?= $this->img ?>" method="POST" enctype="multipart/form-data">
+        <img class="w-100" src="/public/images/users/<?= $this->img?>" alt="Avatar">
+        <form action="/profile/upg_img/<?= $_SESSION['user_id'] ?>/<?= $this->img ?>" method="POST" enctype="multipart/form-data">
             <input class="mt-2" name="img" class="form-control" type="file">
             <div style="height:30px; color: red;">
-                <?php if(isset($_SESSION['imgError'])) echo $_SESSION['imgError'] ?>
+                <?= $this->get_flash_message('imgError') ?>
             </div>
-            <input  type="submit" value="Upgrade" class="form-control">
+            <input type="submit" value="Upgrade" class="form-control w-25 position-absolute">
         </form>
     </div>
 </div>
-<?php 
-unset($_SESSION['imgError']);
+
+

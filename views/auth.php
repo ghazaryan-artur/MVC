@@ -1,7 +1,7 @@
 <div class="container mt-5 w-50">
     <h1 class="text-center my-5">Welcome to our site!</h1>
     <div style="height:40px;color:green; text-align:center;">
-        <h3><?php if(isset($_SESSION['reg'])) echo ($_SESSION['reg']) ?></h3>
+        <h3><?= $this->get_flash_message('reg') ?></h3>
     </div>
     <form action="" method="POST">
         <div class="form-group">
@@ -26,5 +26,4 @@
         </div>
     </form>
 </div>
-<?php 
-unset($_SESSION['reg']);
+

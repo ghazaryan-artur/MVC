@@ -1,9 +1,12 @@
 <?php
 namespace system;
 
-class View {
+use helpers\FlashHelper;
+
+class View extends FlashHelper {
 
 	public function render($view_file, $wrap = true){
+
 		if (file_exists("views/$view_file.php")){
 			if($wrap){
 				include "views/layout/header.php";
@@ -14,6 +17,8 @@ class View {
 			}
 		}
 	}
+
+	
 
 	public function __get ($name){
 		$this->$name = null;

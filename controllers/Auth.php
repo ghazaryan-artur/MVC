@@ -33,20 +33,27 @@ class Auth extends Controller{
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->view->errors = [];
 			if(empty($_POST['name'])){
-				$this->view->errors['name'] = 'First name field is empty';
+				// $this->view->errors['name'] = 'Name field is empty';
+				$this->view->set_flash_message('name','Name field is empty');
 			}  
 			if(empty($_POST['email'])){   
-				$this->view->errors['email'] = 'Email address is empty';
+				// $this->view->errors['email'] = 'Email address is empty';
+				$this->view->set_flash_message('email','Email address is empty');
 			} elseif (!preg_match('/[A-Za-z0-9\.\-\_]{2,20}[@]{1}[A-Za-z\.]{1,15}/' , $_POST['email'] )){
-				$this->view->errors['email'] = 'Email address is wrong';
+				// $this->view->errors['email'] = 'Email address is wrong';
+				$this->view->set_flash_message('email','Email address is wrong');
 			}  
 			if (empty($_POST['password'])){
-				$this->view->errors['password'] = 'Password field is empty';
+				// $this->view->errors['password'] = 'Password field is empty';
+				$this->view->set_flash_message('password','Password field is empty');
+
 			} elseif($_POST["password"] != $_POST["conf_password"] ){
-				$this->view->errors['password'] = 'Passwords did\'n mutch';
+				// $this->view->errors['password'] = 'Passwords did\'n mutch';
+				$this->view->set_flash_message('password','Passwords did\'n mutch');
+
 			}
 			
-			if(empty($this->view->errors)){
+			if(empty($_SESSION['name']) && empty($_SESSION['email']) && empty($_SESSION['password'])){
 				$model = new User;
 				$unique = $model->is_unique($_POST['email']);
 				if ($unique){
@@ -54,7 +61,7 @@ class Auth extends Controller{
 					$data['password'] = MD5($data['password']);
 					unset($data['conf_password']);
 					$result = $model->reg($data);
-					$_SESSION['reg'] = 'You have successfully registered';
+					$this->view->set_flash_message('reg','You have successfully registered');
 					header('Location: /');
 				} else {
 					$this->view->errors['email'] = "User with this email already registred";
@@ -63,4 +70,8 @@ class Auth extends Controller{
 		}
 		$this->view->render('reg');
 	}
+	public function logout(){
+		unset($_SESSION['user_id']);
+        header("Location: /");
+    }
 }

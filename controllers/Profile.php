@@ -14,7 +14,6 @@ class Profile extends Controller{
     
     public function index(){
         $user_id = $_SESSION['user_id'];
-        
         $model = new User;
         $user_data = $model->get_data($user_id);
         $this->view->name = $user_data['name'];
@@ -24,13 +23,7 @@ class Profile extends Controller{
         $this->view->render('profile');
     }
 
-    public function logout(){
-        session_unset();
-        header("Location: /");
-    }
-
-    public function upg_img($prevImage){
-        $delImg = str_replace("%20", " ", $prevImage);  
+    public function upg_img($id, $delImg){
         $error  = '';
         if(empty($_FILES['img']['name'])) {
             $error =  'Any file isn\'t choosen';
@@ -42,11 +35,13 @@ class Profile extends Controller{
                 $error = 'Files size should be less than 200 MB';
             }
         }
+
+
         
         if(!$error){
-            $uploadingName = microtime() . $imgType;
+            $uploadingName = str_replace(" ", "", microtime() . $imgType);
             $model = new User;
-            $isUpd = $model->upd_img($uploadingName);
+            $isUpd = $model->upd_img($id, $uploadingName);
             if($isUpd){
                 if (move_uploaded_file($_FILES['img']['tmp_name'], "public/images/users/".$uploadingName)){
                     if($prevImage != 'default.png'){
@@ -57,8 +52,7 @@ class Profile extends Controller{
                 }
             }
         }
-        $_SESSION['imgError'] = $error;
+        $this->view->set_flash_message('imgError', $error);
         header('Location: /profile');
-
     }
 }

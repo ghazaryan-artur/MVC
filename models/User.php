@@ -24,8 +24,7 @@ use system\Model;
             return !$sel;
         }
         
-        public function upd_img($name){
-            $id = $_SESSION['user_id'];
+        public function upd_img($id, $name){
             return $this->db->update("users", array('image' => "$name"), "id=$id");
         }
     }

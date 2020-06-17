@@ -16,8 +16,9 @@ class Db {
 
     public function select($query, $all = true){        
         $data = $this->connection->query($query);
-        if($data->num_rows > 0){
+        if($data){
             if($all){
+                $result = [];
                 while ($row = $data->fetch_assoc()) {
                     $result[] = $row;
                 }
@@ -31,11 +32,12 @@ class Db {
     }
 
     public function insert($table, $data){
+
         $qKeys ='';
         $qValues = '';
         foreach ($data as $key => $value){
             $qKeys .= $key.',';
-            $qValues .= '"'. str_replace(['\\', "'", '"'], ['\\\\', "\'", '\"'], $email) .'"' .',';
+            $qValues .= '"'. str_replace(['\\', "'", '"'], ['\\\\', "\'", '\"'], $value) .'"' .',';
         }
         $qKeys = substr($qKeys,0,-1);
         $qValues = substr($qValues,0,-1);
