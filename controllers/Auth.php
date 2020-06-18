@@ -3,6 +3,7 @@ namespace controllers;
 
 use system\Controller;
 use models\User;
+use helpers\FlashHelper;
 
 class Auth extends Controller{
 
@@ -34,22 +35,18 @@ class Auth extends Controller{
 			$this->view->errors = [];
 			if(empty($_POST['name'])){
 				// $this->view->errors['name'] = 'Name field is empty';
-				$this->view->set_flash_message('name','Name field is empty');
+				FlashHelper::set_flash_message('name','Name field is empty');
 			}  
 			if(empty($_POST['email'])){   
-				// $this->view->errors['email'] = 'Email address is empty';
-				$this->view->set_flash_message('email','Email address is empty');
+				FlashHelper::set_flash_message('email','Email address is empty');
 			} elseif (!preg_match('/[A-Za-z0-9\.\-\_]{2,20}[@]{1}[A-Za-z\.]{1,15}/' , $_POST['email'] )){
-				// $this->view->errors['email'] = 'Email address is wrong';
-				$this->view->set_flash_message('email','Email address is wrong');
+				FlashHelper::set_flash_message('email','Email address is wrong');
 			}  
 			if (empty($_POST['password'])){
-				// $this->view->errors['password'] = 'Password field is empty';
-				$this->view->set_flash_message('password','Password field is empty');
+				FlashHelper::set_flash_message('password','Password field is empty');
 
 			} elseif($_POST["password"] != $_POST["conf_password"] ){
-				// $this->view->errors['password'] = 'Passwords did\'n mutch';
-				$this->view->set_flash_message('password','Passwords did\'n mutch');
+				FlashHelper::set_flash_message('password','Passwords did\'n mutch');
 
 			}
 			
@@ -61,10 +58,10 @@ class Auth extends Controller{
 					$data['password'] = MD5($data['password']);
 					unset($data['conf_password']);
 					$result = $model->reg($data);
-					$this->view->set_flash_message('reg','You have successfully registered');
+					FlashHelper::set_flash_message('reg','You have successfully registered');
 					header('Location: /');
 				} else {
-					$this->view->errors['email'] = "User with this email already registred";
+					FlashHelper::set_flash_message('email','User with this email already registred');
 				}
 			}
 		}

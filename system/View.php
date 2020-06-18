@@ -1,9 +1,8 @@
 <?php
 namespace system;
 
-use helpers\FlashHelper;
 
-class View extends FlashHelper {
+class View {
 
 	public function render($view_file, $wrap = true){
 

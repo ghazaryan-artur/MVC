@@ -3,6 +3,7 @@ namespace controllers;
 
 use system\Controller;
 use models\User;
+use \helpers\FlashHelper;
 
 class Profile extends Controller{
     function __construct(){
@@ -44,7 +45,7 @@ class Profile extends Controller{
             $isUpd = $model->upd_img($id, $uploadingName);
             if($isUpd){
                 if (move_uploaded_file($_FILES['img']['tmp_name'], "public/images/users/".$uploadingName)){
-                    if($prevImage != 'default.png'){
+                    if($delImg != 'default.png'){
                         unlink ("public/images/users/$delImg");
                     }
                 } else {
@@ -52,7 +53,7 @@ class Profile extends Controller{
                 }
             }
         }
-        $this->view->set_flash_message('imgError', $error);
+        FlashHelper::set_flash_message('imgError', $error);
         header('Location: /profile');
     }
 }

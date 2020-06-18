@@ -12,9 +12,9 @@
         <form action="/profile/upg_img/<?= $_SESSION['user_id'] ?>/<?= $this->img ?>" method="POST" enctype="multipart/form-data">
             <input class="mt-2" name="img" class="form-control" type="file">
             <div style="height:30px; color: red;">
-                <?= $this->get_flash_message('imgError') ?>
+                <?= helpers\FlashHelper::get_flash_message('imgError') ?>
             </div>
-            <input type="submit" value="Upgrade" class="form-control w-25 position-absolute">
+            <input type="submit" value="Upgrade" class="form-control">
         </form>
     </div>
 </div>
