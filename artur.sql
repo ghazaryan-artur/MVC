@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 18 2020 г., 08:51
+-- Время создания: Июн 13 2020 г., 17:41
 -- Версия сервера: 10.4.10-MariaDB
--- Версия PHP: 7.3.12
+-- Версия PHP: 7.4.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -117,16 +117,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `image`, `password`, `date`) VALUES
-(74, 'Artur', 'cerber1993@rambler.ru', 'default.png', '698d51a19d8a121ce581499d7b701668', '2020-06-12 11:30:05'),
-(79, 'Artur', 'Crown_92@mail.ru', 'default.png', '698d51a19d8a121ce581499d7b701668', '2020-06-13 11:39:13'),
-(80, 'Arrrr', 'gggg@gg.gg', 'default.png', '698d51a19d8a121ce581499d7b701668', '2020-06-18 08:34:43');
+(74, 'Artur', 'cerber1993@rambler.ru', '0.45221900 1592067423.jpg', '698d51a19d8a121ce581499d7b701668', '2020-06-12 11:30:05'),
+(79, 'Artur', 'Crown_92@mail.ru', '0.62427300 1592066497.jpg', '698d51a19d8a121ce581499d7b701668', '2020-06-13 11:39:13');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

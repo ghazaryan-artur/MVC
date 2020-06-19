@@ -53,7 +53,9 @@ class Profile extends Controller{
                 }
             }
         }
-        FlashHelper::set_flash_message('imgError', $error);
+
+        FlashHelper::set_flash_message(['error', 'img', 'thirdLevel'], $_SESSION , $error);
+
         header('Location: /profile');
     }
 }
