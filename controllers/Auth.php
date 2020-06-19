@@ -34,19 +34,18 @@ class Auth extends Controller{
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->view->errors = [];
 			if(empty($_POST['name'])){
-				// $this->view->errors['name'] = 'Name field is empty';
-				FlashHelper::set_flash_message('name','Name field is empty');
+				FlashHelper::set_flash_message($_SESSION, 'name','Name field is empty');
 			}  
 			if(empty($_POST['email'])){   
-				FlashHelper::set_flash_message('email','Email address is empty');
+				FlashHelper::set_flash_message($_SESSION, 'email', 'Email address is empty');
 			} elseif (!preg_match('/[A-Za-z0-9\.\-\_]{2,20}[@]{1}[A-Za-z\.]{1,15}/' , $_POST['email'] )){
-				FlashHelper::set_flash_message('email','Email address is wrong');
+				FlashHelper::set_flash_message($_SESSION, 'email', 'Email address is wrong');
 			}  
 			if (empty($_POST['password'])){
-				FlashHelper::set_flash_message('password','Password field is empty');
+				FlashHelper::set_flash_message($_SESSION, 'password', 'Password field is empty');
 
 			} elseif($_POST["password"] != $_POST["conf_password"] ){
-				FlashHelper::set_flash_message('password','Passwords did\'n mutch');
+				FlashHelper::set_flash_message($_SESSION, 'password', 'Passwords did\'n mutch');
 
 			}
 			
@@ -58,10 +57,10 @@ class Auth extends Controller{
 					$data['password'] = MD5($data['password']);
 					unset($data['conf_password']);
 					$result = $model->reg($data);
-					FlashHelper::set_flash_message('reg','You have successfully registered');
+					FlashHelper::set_flash_message($_SESSION, 'reg', 'You have successfully registered');
 					header('Location: /');
 				} else {
-					FlashHelper::set_flash_message('email','User with this email already registred');
+					FlashHelper::set_flash_message($_SESSION, 'email', 'User with this email already registred');
 				}
 			}
 		}

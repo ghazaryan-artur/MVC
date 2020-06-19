@@ -14,7 +14,7 @@ class Db {
       
     }
 
-    public function select($query, $all = true){        
+    public function select($query, $all = false){        
         $data = $this->connection->query($query);
         if($data){
             if($all){

@@ -9,10 +9,10 @@
     </div>
     <div class="w-25 p-2">
         <img class="w-100" src="/public/images/users/<?= $this->img?>" alt="Avatar">
-        <form action="/profile/upg_img/<?= $_SESSION['user_id'] ?>/<?= $this->img ?>" method="POST" enctype="multipart/form-data">
+        <form action="/profile/upg_img" method="POST" enctype="multipart/form-data">
             <input class="mt-2" name="img" class="form-control" type="file">
             <div style="height:30px; color: red;">
-                <?= helpers\FlashHelper::get_flash_message(['imgError', 'xxx', 'yyy', 'gggdg'], $_SESSION) ?>
+                <?= helpers\FlashHelper::get_flash_message($_SESSION, ['error', 'img', 'thirdLevel']) ?>
             </div>
             <input type="submit" value="Upgrade" class="form-control">
         </form>

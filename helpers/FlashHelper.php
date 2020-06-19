@@ -2,7 +2,7 @@
 namespace helpers;
 
 class FlashHelper {
-    public static function set_flash_message($key, $message){
+    public static function set_flash_message_old($key, $message){
         $_SESSION[$key] = $message;
     }
     static function get_flash_message_old($key){
@@ -16,7 +16,7 @@ class FlashHelper {
 
 
 
-    public static function set_flash_message($keys, &$arr, $message){
+    public static function set_flash_message(&$arr, $keys, $message){
         if(is_array($keys)){
             $key = array_shift($keys);
             $arr[$key] = null;
@@ -24,38 +24,38 @@ class FlashHelper {
                $arr[$key] = $message;
                 return;
             }
-            FlashHelper::set_flash_message($keys, $arr[$key], $message);
+            FlashHelper::set_flash_message($arr[$key], $keys, $message);
         } else {
             $arr[$keys] = $message;
         }
     }
-    public static function get_flash_message($keys, $array){
+    public static function get_flash_message($array, $keys){
         if(is_array($keys)){
             $tmp = &$array;
             foreach($keys as $key => $value) {
                 $tmp =& $tmp[$value];
             }
-            FlashHelper::unset_flash_message($keys,$array);
+            FlashHelper::unset_flash_message($array, $keys);
             return $tmp;
         } else {
-            if(isset($_SESSION[$key])) {
-                $message = $array[$key];
-                unset($array[$key]);
+            if(isset($array[$keys])) {
+                $message = $array[$keys];
+                unset($array[$keys]);
                 return $message;
             } 
             return null;
         }
         
     }
-    public static function unset_flash_message($keys, &$arr){
+
+    public static function unset_flash_message(&$arr, $keys){
         $key = array_shift($keys);
         $arr[$key] = null;
         if(empty($keys)) {
-            var_dump($arr);
             unset($arr);
             return;
         }
-        FlashHelper::unset_flash_message($keys, $arr[$key]);
+        FlashHelper::unset_flash_message($arr[$key], $keys);
     }
     
 

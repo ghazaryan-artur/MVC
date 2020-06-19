@@ -8,20 +8,20 @@
                 <div class="col-4 mx-auto my-3">
                     <input type="text" class="form-control" placeholder="Name"  name="name" pattern="[A-Za-z\-\.][a-z]{1,16}" maxlength="17" >
                     <div style="height:20px; color: red;">
-                        <span style="height:100%"><?=  helpers\FlashHelper::get_flash_message('name') ?></span>
+                        <span style="height:100%"><?=  helpers\FlashHelper::get_flash_message($_SESSION, 'name') ?></span>
                     </div>
                 </div>
                 
                 <div class="col-4 mx-auto my-3">
                     <input type="email" class="form-control"  placeholder="Email"  name="email">
                     <div style="height:20px; color: red;">
-                        <span style="height:100%"><?= helpers\FlashHelper::get_flash_message('email') ?></span>
+                        <span style="height:100%"><?= helpers\FlashHelper::get_flash_message($_SESSION, 'email') ?></span>
                     </div>
                 </div>
                 <div class="col-4 mx-auto my-3">
                     <input type="password" name="password" class="form-control" placeholder="Password">
                     <div style="height:20px; color: red;">
-                        <span style="height:100%"><?= helpers\FlashHelper::get_flash_message('password') ?></span>
+                        <span style="height:100%"><?= helpers\FlashHelper::get_flash_message($_SESSION, 'password') ?></span>
                     </div>
                 </div> 
                 <div class="col-4 mx-auto my-3">

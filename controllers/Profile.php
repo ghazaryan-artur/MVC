@@ -20,11 +20,12 @@ class Profile extends Controller{
         $this->view->name = $user_data['name'];
         $this->view->email = $user_data['email'];
         $this->view->img = $user_data['image'];
-
         $this->view->render('profile');
     }
 
-    public function upg_img($id, $delImg){
+    public function upg_img(){
+        $id = $_SESSION['user_id'];
+ 
         $error  = '';
         if(empty($_FILES['img']['name'])) {
             $error =  'Any file isn\'t choosen';
@@ -37,11 +38,11 @@ class Profile extends Controller{
             }
         }
 
-
-        
         if(!$error){
             $uploadingName = str_replace(" ", "", microtime() . $imgType);
             $model = new User;
+            $delImgArr = $model->get_prev_img($id);
+            $delImg = $delImgArr['image'];
             $isUpd = $model->upd_img($id, $uploadingName);
             if($isUpd){
                 if (move_uploaded_file($_FILES['img']['tmp_name'], "public/images/users/".$uploadingName)){
@@ -54,8 +55,7 @@ class Profile extends Controller{
             }
         }
 
-        FlashHelper::set_flash_message(['error', 'img', 'thirdLevel'], $_SESSION , $error);
-
+        FlashHelper::set_flash_message($_SESSION, ['error', 'img', 'thirdLevel'], $error);
         header('Location: /profile');
     }
 }
