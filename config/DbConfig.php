@@ -5,5 +5,5 @@ namespace config;
         const HOST = "localhost";
         const USERNAME = "root";
         const PASSWORD = "";
-        const DBNAME = "artur"; 
+        const DBNAME = "MVC"; 
     }

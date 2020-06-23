@@ -29,17 +29,17 @@ class FlashHelper {
             $arr[$keys] = $message;
         }
     }
-    public static function get_flash_message($array, $keys){
+    public static function get_flash_message(&$arr, $keys){
         if(is_array($keys)){
-            $tmp = &$array;
+            $tmp = $arr;
             foreach($keys as $key => $value) {
                 $tmp =& $tmp[$value];
             }
-            FlashHelper::unset_flash_message($array, $keys);
+            FlashHelper::unset_flash_message($arr, $keys);
             return $tmp;
         } else {
             if(isset($array[$keys])) {
-                $message = $array[$keys];
+                $message = $arr[$keys];
                 unset($array[$keys]);
                 return $message;
             } 

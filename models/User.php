@@ -6,7 +6,7 @@ use system\Model;
         public function login($email, $password){
             $email = str_replace([ '\\', "'", '"' ], ['\\\\', "\'", '\"'], $email);
             $password = MD5($password);
-            $sel = $this->db->select("SELECT id  FROM users WHERE  `email` = '$email' AND `password` = '$password'");		
+            $sel = $this->db->select("SELECT id  FROM users WHERE `password` = '$password' AND `email` = '$email'");		
             return $sel;
         }
 
@@ -30,5 +30,9 @@ use system\Model;
 
         public function get_prev_img($id){
             return $this->db->select("SELECT `image` FROM users WHERE  `id` = '$id'");
+        }
+
+        public function get_friends(){
+            return $this->db->select("SELECT `id`, `name`, `email`, `image` FROM users", true);
         }
     }

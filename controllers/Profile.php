@@ -17,6 +17,7 @@ class Profile extends Controller{
         $user_id = $_SESSION['user_id'];
         $model = new User;
         $user_data = $model->get_data($user_id);
+        $this->view->id = $user_id;
         $this->view->name = $user_data['name'];
         $this->view->email = $user_data['email'];
         $this->view->img = $user_data['image'];
@@ -25,7 +26,6 @@ class Profile extends Controller{
 
     public function upg_img(){
         $id = $_SESSION['user_id'];
- 
         $error  = '';
         if(empty($_FILES['img']['name'])) {
             $error =  'Any file isn\'t choosen';
@@ -57,5 +57,20 @@ class Profile extends Controller{
 
         FlashHelper::set_flash_message($_SESSION, ['error', 'img', 'thirdLevel'], $error);
         header('Location: /profile');
+    }
+    public function friends(){
+        $model = new User;
+        $this->view->friends = $model->get_friends();
+        $this->view->render('friends');
+    }
+
+    public function user($user_id){
+        $model = new User;
+        $user_data = $model->get_data($user_id);
+        $this->view->id = $user_id;
+        $this->view->name = $user_data['name'];
+        $this->view->email = $user_data['email'];
+        $this->view->img = $user_data['image'];
+        $this->view->render('profile');
     }
 }
