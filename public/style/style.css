@@ -1,0 +1,13 @@
+.chat {
+    position: relative;
+    height: 600px;
+    margin-top: 170px;
+}
+.sendField{
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+}
+.message {
+    height: 80px;
+}
