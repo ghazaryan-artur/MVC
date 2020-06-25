@@ -1,13 +1,19 @@
 .chat {
-    position: relative;
     height: 600px;
     margin-top: 170px;
 }
-.sendField{
-    position: absolute;
-    bottom: 0;
+.messagesBlock {
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+.sendField {
     height: 100px;
 }
 .message {
     height: 80px;
+}
+.imgDiv {
+    width: 80px!important;
 }

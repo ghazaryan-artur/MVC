@@ -34,6 +34,7 @@ use system\Model;
         }
 
         public function get_friends(){
-            return $this->db->select("SELECT `id`, `name`, `email`, `image` FROM users", true);
+            $user_id = $_SESSION['user_id'];
+            return $this->db->select("SELECT `id`, `name`, `email`, `image` FROM users WHERE id !=  $user_id", true);
         }
     }

@@ -24,7 +24,7 @@
                 <input type="submit" value="Upgrade" class="form-control">
             </form>
         <?php else : ?>
-            <a href="/chat/conversation/<?= $this->id ?>" class="btn btn-info btn-lg mt-5">Come to chat</a>
+            <a href="/chat/conversation/<?= $this->id ?>/" class="btn btn-info btn-lg mt-5">Come to chat</a>
         <?php endif ?>
         
     </div>
