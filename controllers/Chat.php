@@ -15,7 +15,7 @@ class Chat extends Controller {
 
     public function conversation($to_id){
         $model = new Messages;
-        $this->view->data = $model->get_msg($_SESSION['user_id'], $to_id);
+        $this->view->data = $model->get_msgs($_SESSION['user_id'], $to_id);
         $this->view->to_id = $to_id;
         $this->view->render('chat');   
     }
@@ -52,7 +52,7 @@ class Chat extends Controller {
             'last_msg_id' => $_POST['msg_id']
         ];
         $model = new Messages;
-        $result = $model->get_all_last_msg($_SESSION['user_id'], $_POST['to_id'], $_POST['msg_id']);
+        $result = $model->get_new_msgs($_SESSION['user_id'], $_POST['to_id'], $_POST['msg_id']);
         if(!empty($result)){
             $output['last_msg_id'] = $result[count($result)-1]['id'];
             $output['data'] = $result;
