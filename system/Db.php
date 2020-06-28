@@ -42,6 +42,9 @@ class Db {
         $qKeys = substr($qKeys,0,-1);
         $qValues = substr($qValues,0,-1);
         $result = $this->connection->query("INSERT INTO $table ($qKeys) VALUES ($qValues)");
+        if($result){
+           return $this->connection->insert_id;
+        }
         return $result;
     }
     
