@@ -15,7 +15,6 @@ class Auth extends Controller{
 			if (empty($_POST["password"])){
 				$this->view->passErr = 'Password feild is empty';
 			}
-
 			if(!$this->view->emailErr && !$this->view->passErr){
 				$model = new \models\User;
 				$result = $model->login($_POST['email'], $_POST['password']);

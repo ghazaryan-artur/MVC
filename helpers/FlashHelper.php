@@ -2,20 +2,6 @@
 namespace helpers;
 
 class FlashHelper {
-    public static function set_flash_message_old($key, $message){
-        $_SESSION[$key] = $message;
-    }
-    static function get_flash_message_old($key){
-        if(isset($_SESSION[$key])) {
-            $message = $_SESSION[$key];
-            unset($_SESSION[$key]);
-            return $message;
-        } 
-        return null;
-    }
-
-
-
     public static function set_flash_message(&$arr, $keys, $message){
         if(is_array($keys)){
             $key = array_shift($keys);
